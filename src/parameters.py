@@ -4,17 +4,11 @@ from typing import Optional
 import numpy as np
 
 
-
-
-
 class CompartmentType(Enum):
     """Types of neuronal compartments."""
-    SOMA     = "soma"
-    AXON     = "axon"
+    SOMA = "soma"
+    AXON = "axon"
     DENDRITE = "dendrite"
-
-
-
 
 
 class CompartmentParameters:
@@ -46,55 +40,51 @@ class CompartmentParameters:
         `refractory_period`: Refractory period (ms)
         `spike_threshold`: Spike detection threshold (mV)
     """
-    
+
     # Morphological properties
     length: float = 100.0
     diameter: float = 2.0
-    area: Optional[float] = None    
+    area: Optional[float] = None
     # Electrical properties
     C_m: float = 1.0
     R_m: float = 20000.0
-    R_a: float = 100.0    
+    R_a: float = 100.0
     # Hodgkin-Huxley channel conductances (mS/cm²)
     g_Na: float = 120.0
     g_K: float = 36.0
-    g_L: float = 0.3    
+    g_L: float = 0.3
     # Reversal potentials (mV)
     E_Na: float = 50.0
     E_K: float = -77.0
-    E_L: float = -54.387    
+    E_L: float = -54.387
     # Dendritic-specific channels (mS/cm²)
     g_Ca: float = 0.0
     g_K_Ca: float = 0.0
     g_h: float = 0.0
-    g_Kv: float = 0.0    
+    g_Kv: float = 0.0
     # Calcium dynamics
     E_Ca: float = 120.0
     tau_Ca: float = 20.0
     Ca_0: float = 0.0
-    
+
     # Refractory period
     refractory_period: float = 10.0
-    
+
     # Spike detection
     spike_threshold: float = 0.0
-    
 
     def __post_init__(self):
         """Calculates compartmetn surface area (if not set)."""
         if self.area is None:
             self.area = np.pi * self.diameter * self.length
-            
+
         self.area_cm2 = self.area * 1e-8  # µm² → cm²
-
-
-
 
 
 class NeuronParameters:
     """
     Params for a complete multi-compartment neuron.
-    
+
     Parameters:
         `dt`:                         Time step (ms)
         `temperature`:                Temperature (°C)
@@ -107,14 +97,14 @@ class NeuronParameters:
         `default_axon_length`:        Default axon length (μm)
         `default_axon_diameter`:      Default axon diameter (μm)
     """
-    
+
     # Simulation params
     dt: float = 0.01
     temperature: float = 37.0
-    
+
     spike_threshold: float = 0.0
     refractory_period: float = 50.0
-    
+
     # default compartment params
     default_tau_rise: float = 0.5
     default_tau_decay: float = 5.0
@@ -124,15 +114,12 @@ class NeuronParameters:
     default_axon_diameter: float = 1.0
 
 
-
-
-
 class SynapticParameters:
     """
     Params for connections between neurons.
-    
+
     Note: `plasticity_enabled` and `learning_rate` are not yet implemented.
-    
+
     Parameters:
         `tau_rise`:             Rise time constant (ms)
         `tau_decay`:            Decay time constant (ms)
@@ -143,27 +130,24 @@ class SynapticParameters:
         `plasticity_enabled`:   Whether plasticity is enabled
         `learning_rate`:        Learning rate
     """
-    
+
     # Synapse dynamics
     tau_rise: float = 0.5
     tau_decay: float = 5.0
     amplitude: float = 1.0
     reversal_potential: float = 0.0
-    
+
     # Connection
     delay: float = 1.0
     weight: float = 1.0
-    
+
     # TODO: Add Plasticity
     plasticity_enabled: bool = False
     learning_rate: float = 0.01
 
 
-
-
-
 # Predefined parameter sets for compartments
-SOMA_PARAMETERS = CompartmentParameters( # use hodgkin-huxley vals
+SOMA_PARAMETERS = CompartmentParameters(  # use hodgkin-huxley vals
     length=20.0,
     diameter=20.0,
     g_Na=120.0,
@@ -184,8 +168,8 @@ AXON_PARAMETERS = CompartmentParameters(
 DENDRITE_PARAMETERS = CompartmentParameters(
     length=200.0,
     diameter=2.0,
-    g_Na=20.0, 
-    g_K=10.0, 
+    g_Na=20.0,
+    g_K=10.0,
     g_L=0.3,
     g_Ca=2.0,
     g_K_Ca=5.0,
@@ -193,5 +177,3 @@ DENDRITE_PARAMETERS = CompartmentParameters(
     g_Kv=3.0,
     C_m=1.0
 )
-
-

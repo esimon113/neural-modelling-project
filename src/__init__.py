@@ -11,32 +11,29 @@ from .neuron import Neuron
 from .network import NeuronalNetwork, Connection
 from .compartment import Compartment, Synapse, CompartmentState
 from .parameters import (
-    CompartmentType, 
-    CompartmentParameters, 
-    NeuronParameters, 
+    CompartmentType,
+    CompartmentParameters,
+    NeuronParameters,
     SynapticParameters,
     SOMA_PARAMETERS,
-    AXON_PARAMETERS, 
+    AXON_PARAMETERS,
     DENDRITE_PARAMETERS
 )
 
 __all__ = [
     "Neuron",
-    "NeuronalNetwork", 
+    "NeuronalNetwork",
     "Connection",
     "Compartment",
     "Synapse",
     "CompartmentState",
-    
+
     "CompartmentType",
-    "CompartmentParameters", 
+    "CompartmentParameters",
     "NeuronParameters",
     "SynapticParameters",
-    
+
     "SOMA_PARAMETERS",
-    "AXON_PARAMETERS", 
+    "AXON_PARAMETERS",
     "DENDRITE_PARAMETERS"
 ]
-
-
-
