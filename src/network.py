@@ -1,12 +1,14 @@
 
 import numpy as np
 from typing import Optional
+from dataclasses import dataclass
 import random
 
 from neuron import Neuron
 from parameters import NeuronParameters, SynapticParameters
 
 
+@dataclass
 class Connection:
     """
     Represents a synaptic connection between two neurons.
@@ -34,7 +36,7 @@ class NeuronalNetwork:
     """
 
     def __init__(self, num_neurons: int = 5, neuron_params: Optional[NeuronParameters] = None, neuron_params_list: Optional[list[NeuronParameters]] = None):
-        """
+        """ 
         Args:
             `num_neurons`:        Number of neurons in the network
             `neuron_params`:      Single parameter set for all neurons (used if neuron_params_list is None)
