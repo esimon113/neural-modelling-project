@@ -8,8 +8,9 @@ A somewhat biologically realistic implementation of multi-compartment neurons ba
 2. [Mathematical Foundations](#mathematical-foundations)
 3. [Architecture](#architecture)
 4. [Installation and Usage](#installation-and-usage)
-6. [Visualization](#visualization)
-6. [References](#references)
+5. [Visualization](#visualization)
+6. [GUI Wrapper](#gui-wrapper)
+7. [References](#references)
 
 ## Biological Background
 
@@ -263,6 +264,13 @@ The project includes comprehensive visualization tools:
 - Weight matrices
 - Connection density analysis
 - Network topology visualization
+
+
+## GUI Wrapper
+
+A graphical user interface (GUI) allows easier configuration and simulation.
+
+<img src="imgs/gui/application screenshot.png" alt="Screenshot of the running gui application" width="650">
 
 
 ## References

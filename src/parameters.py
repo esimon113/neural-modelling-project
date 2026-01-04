@@ -1,6 +1,7 @@
 
 from enum import Enum
 from typing import Optional
+from dataclasses import dataclass, field
 import numpy as np
 
 
@@ -11,6 +12,7 @@ class CompartmentType(Enum):
     DENDRITE = "dendrite"
 
 
+@dataclass
 class CompartmentParameters:
     """
     Parameters for a single neuronal compartment.
@@ -44,7 +46,7 @@ class CompartmentParameters:
     # Morphological properties
     length: float = 100.0
     diameter: float = 2.0
-    area: Optional[float] = None
+    area: Optional[float] = field(default=None, init=False)
     # Electrical properties
     C_m: float = 1.0
     R_m: float = 20000.0
