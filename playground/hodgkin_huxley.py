@@ -37,6 +37,7 @@ The description, parameters and equations for the model are taken from:
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 
 def run_hodgkin_huxley():
@@ -54,13 +55,13 @@ def run_hodgkin_huxley():
     E_L = -54.387  # Leak equilibrium potential, in mV
 
     def alpha_n(V): return 0.01 * (V + 55) / (1 - np.exp(-(V + 55) / 10))
-    def beta_n(V):  return 0.125 * np.exp(-(V + 65) / 80)
+    def beta_n(V): return 0.125 * np.exp(-(V + 65) / 80)
 
     def alpha_m(V): return 0.1 * (V + 40) / (1 - np.exp(-(V + 40) / 10))
-    def beta_m(V):  return 4.0 * np.exp(-(V + 65) / 18)
+    def beta_m(V): return 4.0 * np.exp(-(V + 65) / 18)
 
     def alpha_h(V): return 0.07 * np.exp(-(V + 65) / 20)
-    def beta_h(V):  return 1 / (1 + np.exp(-(V + 35) / 10))
+    def beta_h(V): return 1 / (1 + np.exp(-(V + 35) / 10))
 
     I_ext = np.zeros_like(time)
     I_ext[1000:1200] = 10  # stimulus
@@ -78,22 +79,25 @@ def run_hodgkin_huxley():
 
     for t in range(1, len(time)):
         gNa = g_Na * m[t-1] ** 3 * h[t-1]
-        gK  = g_K  * n[t-1] ** 4
-        gL  = g_L
+        gK = g_K * n[t-1] ** 4
+        gL = g_L
 
         # Currents
         INa = gNa * (V[t-1] - E_Na)
-        IK  = gK  * (V[t-1] - E_K)
-        IL  = gL  * (V[t-1] - E_L)
+        IK = gK * (V[t-1] - E_K)
+        IL = gL * (V[t-1] - E_L)
 
         # update
         dV = dt * (I_ext[t-1] - INa - IK - IL) / C_m
         V[t] = V[t-1] + dV
 
         # update gating
-        m[t] = m[t-1] + dt * (alpha_m(V[t-1]) * (1 - m[t-1]) - beta_m(V[t-1]) * m[t-1])
-        h[t] = h[t-1] + dt * (alpha_h(V[t-1]) * (1 - h[t-1]) - beta_h(V[t-1]) * h[t-1])
-        n[t] = n[t-1] + dt * (alpha_n(V[t-1]) * (1 - n[t-1]) - beta_n(V[t-1]) * n[t-1])
+        m[t] = m[t-1] + dt * (alpha_m(V[t-1]) *
+                              (1 - m[t-1]) - beta_m(V[t-1]) * m[t-1])
+        h[t] = h[t-1] + dt * (alpha_h(V[t-1]) *
+                              (1 - h[t-1]) - beta_h(V[t-1]) * h[t-1])
+        n[t] = n[t-1] + dt * (alpha_n(V[t-1]) *
+                              (1 - n[t-1]) - beta_n(V[t-1]) * n[t-1])
 
     plt.figure(figsize=(10, 4))
     plt.plot(time, V, label='Membrane Potential (mV)')
@@ -102,4 +106,11 @@ def run_hodgkin_huxley():
     plt.ylabel('Voltage (mV)')
     plt.grid(True)
     plt.legend()
-    plt.show()
+
+    # Save plot
+    output_dir = os.path.join(os.path.dirname(
+        os.path.dirname(__file__)), 'imgs', 'playground')
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, 'hodgkin_huxley.png'),
+                dpi=300, bbox_inches='tight')
+    plt.close()

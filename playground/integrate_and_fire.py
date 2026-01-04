@@ -15,6 +15,7 @@ behavior. (Dayan & Abbot, 2001, p.162 ff.)
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 
 def run_integrate_and_fire():
@@ -31,7 +32,7 @@ def run_integrate_and_fire():
     time = np.arange(0, T, dt)
 
     I = np.zeros(len(time))
-    I[50:150] = 24 # stimulus whihc is applied in specified period
+    I[50:150] = 24  # stimulus whihc is applied in specified period
 
     V = np.full(len(time), V_rest)
     spike_times = []
@@ -44,7 +45,7 @@ def run_integrate_and_fire():
         else:
             dV = (dt / tau_m) * (-(V[t-1] - V_rest) + R_m * I[t-1])
             V[t] = V[t-1] + dV
-            
+
             if V[t] >= V_th:
                 V[t] = 40.0  # spike
                 spike_times.append(time[t])
@@ -58,4 +59,11 @@ def run_integrate_and_fire():
     plt.title('Leaky Integrate-and-Fire Neuron')
     plt.legend()
     plt.grid()
-    plt.show()
+
+    # Save plot
+    output_dir = os.path.join(os.path.dirname(
+        os.path.dirname(__file__)), 'imgs', 'playground')
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, 'integrate_and_fire.png'),
+                dpi=300, bbox_inches='tight')
+    plt.close()
