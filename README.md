@@ -270,7 +270,7 @@ The project includes comprehensive visualization tools:
 
 A graphical user interface (GUI) allows easier configuration and simulation.
 
-<img src="imgs/gui/application screenshot" alt="Screenshot of the running gui application" width="650">
+<img src="imgs/gui/application screenshot.png" alt="Screenshot of the running gui application" width="650">
 
 
 ## References
